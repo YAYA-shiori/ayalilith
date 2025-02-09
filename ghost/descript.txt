@@ -1,0 +1,17 @@
+charset,Shift_JIS
+
+name,®–ì‚è‚è‚·
+type,ghost
+
+sakura.name,‚è‚è‚·
+kero.name,‚è‚è‚µ‚Î
+
+sstp.allowunspecifiedsend,1
+
+icon,icon.ico
+
+shiori,yaya.dll
+
+craftman,seibihan
+craftmanw,®”õ”Ç
+craftmanurl,http://ms.shillest.net/housekeeper/html/zz_other_ayalilith.xhtml
