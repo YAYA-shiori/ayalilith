@@ -1,0 +1,21 @@
+name: auto check
+
+on:
+  push:
+    branches:
+      - main
+      - master
+
+jobs:
+  check:
+    name: auto check
+    runs-on: windows-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - name: shiori-check
+        uses: YAYA-shiori/yaya-CI-check@v1
+        with:
+          shiori-path: .\ghost\master\yaya.dll

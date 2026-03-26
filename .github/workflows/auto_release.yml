@@ -1,0 +1,86 @@
+name: auto release
+
+on:
+  workflow_run:
+    workflows: ["auto check"]
+    types:
+      - completed
+    branches:
+      - main
+      - master
+
+jobs:
+  build:
+    name: auto release
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    steps:
+      - name: install dependencies
+        run: sudo apt-get install zip
+      
+      - name: checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      
+      - name: Delete all releases
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Get all release IDs
+          releases=$(gh api repos/${{ github.repository }}/releases | jq -r '.[].id')
+          
+          # Delete each release
+          for release_id in $releases; do
+            gh api -X DELETE repos/${{ github.repository }}/releases/$release_id
+          done
+          
+          # Get all tags
+          tags=$(gh api repos/${{ github.repository }}/tags | jq -r '.[].name')
+          
+          # Delete each tag
+          for tag in $tags; do
+            gh api -X DELETE repos/${{ github.repository }}/git/refs/tags/$tag
+          done
+      
+      - name: build nar
+        run: |
+          # Remove repository files
+          rm -rf .gitignore .gitmodules delete.txt .github .git LICENSE
+          
+          # Remove specific directories from ghost/master/dic/system
+          rm -rf ghost/master/dic/system/.github
+          rm -rf ghost/master/dic/system/.vscode
+          
+          # Remove specific files from ghost/master/dic/system
+          rm -rf ghost/master/dic/system/.git
+          rm -f ghost/master/dic/system/.gitattributes
+          rm -f ghost/master/dic/system/LICENSE
+          rm -f ghost/master/dic/system/README.md
+          
+          # Create clean directory structure
+          mkdir -p build_temp
+          mv * build_temp/ 2>/dev/null || true
+          
+          # Create NAR file with clean settings
+          cd build_temp
+          zip -X -9 -r -y -D "../yayame.nar" ./* \
+            -x "*.DS_Store" -x "*.git*" -x "*.tmp" -x "Thumbs.db" \
+            -x "desktop.ini" -x "*.bak" -x "~*"
+          cd ..
+          rm -rf build_temp
+      
+      - name: Create and upload release
+        uses: softprops/action-gh-release@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.run_id }}
+          name: 自動リリース
+          body: |
+            - エラーチェックで引っかからなかった時の最新版の自動リリースです
+            - 下記のうち **yayame.nar** のみをダウンロードしてください。Source Codeは不要です。
+          draft: false
+          prerelease: false
+          files: |
+            yayame.nar
