@@ -64,7 +64,7 @@ jobs:
           
           # Create NAR file with clean settings
           cd build_temp
-          zip -X -9 -r -y -D "../yayame.nar" ./* \
+          zip -X -9 -r -y -D "../ayalilith.nar" ./* \
             -x "*.DS_Store" -x "*.git*" -x "*.tmp" -x "Thumbs.db" \
             -x "desktop.ini" -x "*.bak" -x "~*"
           cd ..
@@ -79,8 +79,8 @@ jobs:
           name: 自動リリース
           body: |
             - エラーチェックで引っかからなかった時の最新版の自動リリースです
-            - 下記のうち **yayame.nar** のみをダウンロードしてください。Source Codeは不要です。
+            - 下記のうち **ayalilith.nar** のみをダウンロードしてください。Source Codeは不要です。
           draft: false
           prerelease: false
           files: |
-            yayame.nar
+            ayalilith.nar
