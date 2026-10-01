@@ -1,4 +1,4 @@
-charset, Shift_JIS
+charset, UTF-8
 type,ghost
-name,®–ì‚è‚è‚·
+name,ç´ºé‡ã‚Šã‚Šã™
 directory,ayalilith

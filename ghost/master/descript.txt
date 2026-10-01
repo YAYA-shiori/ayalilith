@@ -1,10 +1,10 @@
-charset,Shift_JIS
+charset,UTF-8
 
-name,®–ì‚è‚è‚·
+name,ç´ºé‡ã‚Šã‚Šã™
 type,ghost
 
-sakura.name,‚è‚è‚·
-kero.name,‚è‚è‚µ‚Î
+sakura.name,ã‚Šã‚Šã™
+kero.name,ã‚Šã‚Šã—ã°
 
 sstp.allowunspecifiedsend,1
 
@@ -13,5 +13,5 @@ icon,icon.ico
 shiori,yaya.dll
 
 craftman,seibihan
-craftmanw,®”õ”Ç
+craftmanw,æ•´å‚™ç­
 craftmanurl,http://ms.shillest.net/housekeeper/html/zz_other_ayalilith.xhtml
